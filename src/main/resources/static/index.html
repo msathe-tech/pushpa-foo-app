@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+</head>
+<body >
+
+<h1>Run, Cloud Run!!</h1>
+
+ 
+<div id="wrapper"></div>
+
+
+<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+<script>
+
+
+get("/metadata", function (response) {
+
+    var obj = JSON.parse(response);
+    document.body.style.backgroundColor = obj.color;
+
+    new gridjs.Grid({
+        columns: ['Property', 'Value'],
+        data: [
+            ['Node_Name', obj.Node_Name],
+            ['Host_IP', obj.Host_IP],
+            ['Pod_Name', obj.Pod_Name],
+            ['Pod_IP', obj.Pod_IP],
+            ['Pod_Namespace', obj.Pod_Namespace],
+            ['Service_Account', obj.Service_Account]
+        ]
+    }).render(document.getElementById("wrapper"));
+
+    
+})
+
+function get(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
+}
+</script>
+
+</body>
+</html>
