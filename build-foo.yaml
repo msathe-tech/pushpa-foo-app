@@ -1,0 +1,10 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}', '.' ]
+images:
+- '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}'
+
+# Sample with CNB
+# - name: 'gcr.io/k8s-skaffold/pack'
+#   entrypoint: 'pack'
+#   args: ['build', '--builder=gcr.io/buildpacks/builder:v1', '--path', 'samples/java-springboot', '--publish', 'gcr.io/$PROJECT_ID/cloudbowl-samples-java-springboot:$COMMIT_SHA', 'GOOGLE_BUILD_ARGS=-DskipTests']

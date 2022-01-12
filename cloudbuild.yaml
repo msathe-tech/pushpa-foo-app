@@ -1,0 +1,43 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker login --username=$$DOCKER_HUB_USERNAME --password=$$DOCKER_HUB_PASSWORD']
+  secretEnv: ['DOCKER_HUB_USERNAME', 'DOCKER_HUB_PASSWORD']
+
+# Build foo app
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker build -t $$DOCKER_HUB_USERNAME/k8s-gateway-demo:${SHORT_SHA} .']
+  secretEnv: ['DOCKER_HUB_USERNAME']
+  dir: apps/foo-app
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker push $$DOCKER_HUB_USERNAME/k8s-gateway-demo:${SHORT_SHA}']
+  secretEnv: ['DOCKER_HUB_USERNAME']
+  dir: apps/foo-app
+
+# Render New Deployment config with new container version and commit to config-sync-app-owner repo
+# Render HTTPRoute 
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
+  id: Render New App Deployment, Service, and Commit to Namespace repo (config-sync-app-owner)
+  entrypoint: 'bash'
+  args: ['./render-and-gitpush.sh']
+  secretEnv: ['GITHUB_EMAIL', 'GITHUB_USERNAME', 'GITHUB_TOKEN']
+  env: ['SHORT_SHA=$SHORT_SHA', 'COMMIT_SHA=$COMMIT_SHA']
+
+# substitutions:
+#   _CLUSTER_NAME: sp1-cluster # default cluster name
+#   _CLUSTER_REGION: us-east1 # default cluster region
+
+availableSecrets:
+  secretManager:
+  - versionName: projects/${PROJECT_ID}/secrets/docker-password/versions/1
+    env: 'DOCKER_HUB_PASSWORD'
+  - versionName: projects/${PROJECT_ID}/secrets/docker-username/versions/1
+    env: 'DOCKER_HUB_USERNAME'
+  - versionName: projects/${PROJECT_ID}/secrets/github-username/versions/1 
+    env: 'GITHUB_USERNAME'
+  - versionName: projects/${PROJECT_ID}/secrets/github-token/versions/1 
+    env: 'GITHUB_TOKEN'
+  - versionName: projects/${PROJECT_ID}/secrets/github-email/versions/1 
+    env: 'GITHUB_EMAIL'
