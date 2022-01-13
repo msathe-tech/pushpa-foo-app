@@ -10,9 +10,9 @@ import org.springframework.util.Assert;
 @SpringBootTest
 class K8sGatewayDemoApplicationTests {
 
-	@Test
-	public void contextLoads() {
+	// @Test
+	// public void contextLoads() {
 
-	}
+	// }
 
 }
