@@ -2,29 +2,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: k8s-gateway-api-demo
-  name: k8s-gateway-api-demo  
+    app: foo-app
+  name: foo-app  
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: k8s-gateway-api-demo
+      app: foo-app
   template:
     metadata:
       labels:
-        app: k8s-gateway-api-demo
+        app: foo-app
     spec:
       containers:
       # Please change this to your Docker repo
-      - image: gcr.io/sp1-21-gateway/foo-app:latest
+      - image: us-central1-docker.pkg.dev/sp1-21-gateway/gitops/foo-app
         imagePullPolicy: Always
-        name: k8s-gateway-api-demo
-        resources:
-          limits:
-            cpu: "1"
-            memory: 256Mi
-          requests:
-            cpu: "0.5"
+        name: foo-app
+        # resources:
+        #   limits:
+        #     cpu: "1"
+        #     memory: 256Mi
+        #   requests:
+        #     cpu: "0.5"
         env:
           - name: HOST_IP
             valueFrom:
@@ -68,10 +68,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: k8s-gateway-api-demo-service
+  name: foo-app-service
 spec:
   selector:
-    app: k8s-gateway-api-demo
+    app: foo-app
   ports:
   - port: 8080
     targetPort: 8080
