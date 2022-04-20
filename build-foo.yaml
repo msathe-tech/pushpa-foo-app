@@ -2,8 +2,8 @@ steps:
 # Build using Cloud Native Buildpacks 
 - name: 'gcr.io/k8s-skaffold/pack'
   entrypoint: 'pack'
-  # args: ['build', '--builder=gcr.io/buildpacks/builder:v1', '--path', '.', '--publish', 'gcr.io/$PROJECT_ID/foo-app']
+  args: ['build', '--builder=gcr.io/buildpacks/builder:v1', '--path', '.', '--publish', 'us-central1-docker.pkg.dev/$PROJECT_ID/gitops/foo-app']
   # args: ['build', '--builder=paketobuildpacks/builder:tiny', '--path', '.', '--publish', 'gcr.io/$PROJECT_ID/foo-app']
-  args: ['build', '--builder=paketobuildpacks/builder:tiny', '--path', '.', '--publish', 'us-central1-docker.pkg.dev/$PROJECT_ID/gitops/foo-app']
+  #args: ['build', '--builder=paketobuildpacks/builder:tiny', '--path', '.', '--publish', 'us-central1-docker.pkg.dev/$PROJECT_ID/gitops/foo-app']
   
   
