@@ -15,16 +15,13 @@ spec:
         app: foo
     spec:
       containers:
-      # Please change this to your Docker repo
-      - image: us-central1-docker.pkg.dev/sp1-21-gateway/gitops/foo
+      # Do not change the image manually. The pipeline will change this using Kustomize
+      - image: foo@sha256:your-image-digest
         imagePullPolicy: Always
         name: foo
-        # resources:
-        #   limits:
-        #     cpu: "1"
-        #     memory: 256Mi
-        #   requests:
-        #     cpu: "0.5"
+        resources:
+          limits:
+            memory: 768Mi
         env:
           - name: HOST_IP
             valueFrom:
@@ -61,19 +58,8 @@ spec:
             path: /actuator/health/readiness
             port: 8080
           initialDelaySeconds: 2
-          timeoutSeconds: 10
+          timeoutSeconds: 11
 
-          
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: foo-service
-spec:
-  selector:
-    app: foo
-  ports:
-  - port: 8080
-    targetPort: 8080
-  type: LoadBalancer
+      imagePullSecrets:
+        - name: artifact-registry    
 
