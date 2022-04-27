@@ -15,7 +15,7 @@ public class ColorController {
         
         if (map.isEmpty()) {
             
-            map.put("color", "YELLOW");
+            map.put("color", "MAUVE");
             map.put("Node_Name", System.getenv().get("NODE_NAME"));
             map.put("Host_IP", System.getenv().get("HOST_IP"));
             map.put("Pod_IP", System.getenv().get("POD_IP"));
