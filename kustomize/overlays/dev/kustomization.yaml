@@ -20,3 +20,6 @@ resources:
 replicas:
 - name: foo
   count: 2
+replicas:
+- name: foo
+  count: 3
