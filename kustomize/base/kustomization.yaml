@@ -18,3 +18,7 @@ resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
+
+replicas:
+- name: myapp
+  count: 3
