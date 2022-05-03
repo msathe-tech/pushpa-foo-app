@@ -18,5 +18,5 @@ resources:
 - ../../base
 
 replicas:
-- name: myapp
+- name: foo
   count: 2
