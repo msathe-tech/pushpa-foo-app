@@ -16,8 +16,3 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
-images:
-- digest: sha256:9dd6d2efd98f771f63bf17e8de99974ad23047f6c15ef1a1e7dd7c7ad6ad8c70
-  name: foo
-  newName: us-central1-docker.pkg.dev/sp1-21-gateway/gitops/foo-app
-  
