@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       # Please change this to your Docker repo
-      - image: us-central1-docker.pkg.dev/sp1-21-gateway/gitops/foo
+      - image: us-central1-docker.pkg.dev/demo2-july8/pushpa/foo
         imagePullPolicy: Always
         name: foo
         # resources:
